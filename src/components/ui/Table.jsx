@@ -1,89 +1,72 @@
+import { useEffect } from "react";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import { fetchArticles } from "src/store/slices/BlogSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 const Table = () => {
+  const data = useSelector((state) => state.blog.articlesArray);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchArticles());
+  }, [dispatch]);
+
+  console.log(data, "fetch data");
   return (
     <>
       {" "}
-      <div className="flex flex-col overflow-x-auto">
-        <div className="sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-left text-sm font-light">
-                <thead className="border-b font-medium dark:border-neutral-500">
-                  <tr>
-                    <th scope="col" className="px-6 py-4">
-                      #
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Heading
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b dark:border-neutral-500">
-                    <td className="whitespace-nowrap px-6 py-4 font-medium">
-                      1
+      <table className="min-w-full border divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+              Title
+            </th>
+            <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+              Description
+            </th>
+
+            <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {data.length > 0 ? (
+            <>
+              {data.map((datas, i) => (
+                <>
+                  <tr className="transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
+                    <td
+                      key={i}
+                      className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap"
+                    >
+                      {datas?.article?.title}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                  </tr>
-                  <tr className="border-b dark:border-neutral-500">
-                    <td className="whitespace-nowrap px-6 py-4 font-medium ">
-                      2
+                    <td
+                      key={i}
+                      className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap"
+                    >
+                      {datas?.article?.desc}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4 ">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4 ">Cell</td>
-                  </tr>
-                  <tr className="border-b ">
-                    <td className="whitespace-nowrap px-6 py-4 font-medium ">
-                      3
+                    <td
+                      key={i}
+                      className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <FaPencilAlt className="w-4 h-4" />
+                        <FaTrash className="w-4 h-4" />
+                      </div>
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
-                    <td className="whitespace-nowrap px-6 py-4">Cell</td>
                   </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+                </>
+              ))}
+            </>
+          ) : (
+            <div>There are no books added yet!</div>
+          )}
+        </tbody>
+      </table>
     </>
   );
 };

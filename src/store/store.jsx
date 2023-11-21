@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
     login: LoginSlice.reducer,
     signup: SignupSlice.reducer,
-    blogs: BlogSlice.reducer,
+    blog: BlogSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
