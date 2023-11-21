@@ -3,22 +3,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export const loginUser = createAsyncThunk(
-  "users/login",
+export const signupUser = createAsyncThunk(
+  "users/signupUser",
   async ({ email, password }, thunkAPI) => {
     try {
+      let link = "https://reqres.in/api/register";
       const params = {
         email: email,
         password: password,
       };
-      let link = "https://reqres.in/api/login";
       const response = await axios.post(link, params);
       let data = await response.data;
       if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Login Success",
-        });
         localStorage.setItem("token", data.token);
         return data;
       } else {
@@ -31,13 +27,13 @@ export const loginUser = createAsyncThunk(
         text: e.response.data.error,
       });
       console.log("Error", e.response.data);
-      thunkAPI.rejectWithValue(e.response.data);
+      return thunkAPI.rejectWithValue(e.response.data);
     }
   }
 );
 
-export const LoginSlice = createSlice({
-  name: "login",
+export const SignupSlice = createSlice({
+  name: "signup",
   initialState: {
     token: "",
     isFetching: false,
@@ -56,23 +52,24 @@ export const LoginSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.fulfilled, (state, { payload }) => {
+      .addCase(signupUser.fulfilled, (state, { payload }) => {
+        console.log(payload);
         state.token = payload.token;
         state.isFetching = false;
         state.isSuccess = true;
         return state;
       })
-      .addCase(loginUser.rejected, (state, { payload }) => {
+      .addCase(signupUser.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.isError = true;
         state.errorMessage = payload.message;
       })
-      .addCase(loginUser.pending, (state) => {
+      .addCase(signupUser.pending, (state) => {
         state.isFetching = true;
       });
   },
 });
 
-export const { clearState } = LoginSlice.actions;
+export const { clearState } = SignupSlice.actions;
 
-export const loginSelector = (state) => state.login;
+export const signupSelector = (state) => state.signup;
