@@ -1,12 +1,21 @@
 import { useState } from "react";
 import Logo from "src/assets/logo-nav.webp";
-import Avatar from "./ui/Avatar";
+
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Button from "./ui/Button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    navigate("/");
+  };
   return (
     <>
-      <nav className="flex items-center justify-between flex-wrap p-6">
+      <nav className="flex items-center justify-between flex-wrap p-4 shadow-md">
         <div className="flex items-center flex-shrink-0 text-white mr-6 lg:mr-72">
           <img src={Logo} className="w-100 h-10 mr-2" alt="Logo" />
         </div>
@@ -37,36 +46,33 @@ const Navbar = () => {
           }`}
         >
           <div className="text-sm lg:flex-grow">
-            <a
-              href="#"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white-200 mr-4"
+            <Link
+              to="/blog"
+              className={`block mt-4 lg:inline-block lg:mt-0 ${
+                location.pathname === "/blog" ? "text-blue-500" : "text-black"
+              } mr-4`}
             >
-              First Link
-            </a>
-            <a
-              href="#"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white-200 mr-4"
+              Blog Post
+            </Link>
+            <Link
+              to="/denom"
+              className={`block mt-4 lg:inline-block lg:mt-0 ${
+                location.pathname === "/denom"
+                  ? "text-blue-500 text-bold"
+                  : "text-black"
+              } mr-4`}
             >
-              Second Link
-            </a>
-            <a
-              href="#"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white-200 mr-4"
-            >
-              Third Link
-            </a>
-            <a
-              href="#"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white-200 mr-4"
-            >
-              Fourth Link
-            </a>
+              Denom
+            </Link>
           </div>
 
-          <Avatar
-            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          <Button
+            onClick={handleLogout}
             alt="avatar"
-          />
+            className="border bg-gradient-to-r from-blue-500 to-blue-600 text-white"
+          >
+            Logout
+          </Button>
         </div>
       </nav>
     </>
