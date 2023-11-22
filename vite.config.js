@@ -50,4 +50,9 @@ export default defineConfig({
     },
   },
   base: "./",
+  test: {
+    globals: true,
+    environment: "happy-dom",
+    setupFiles: "./src/tests/setup.js",
+  },
 });

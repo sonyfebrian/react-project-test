@@ -68,6 +68,7 @@ export const FormRegister = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Label htmlFor="email">Email</Label>
         <input
+          id="email"
           type="text"
           name="email"
           className="mb-4 w-full px-3 py-2 border rounded-md"
@@ -79,6 +80,7 @@ export const FormRegister = () => {
         <Label htmlFor="email">Password</Label>
         <div className="relative">
           <input
+            id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             className="mb-4 w-full px-3 py-2 border rounded-md pr-10"
