@@ -63,8 +63,10 @@ export const FormLogin = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <p className="mb-4">Please login to your account</p>
-        <Label>Email</Label>
+        <Label htmlFor="email">Email</Label>
         <input
+          id="email"
+          name="email"
           type="text"
           placeholder="Email"
           className="mb-4 w-full px-3 py-2 border rounded-md"
@@ -73,11 +75,13 @@ export const FormLogin = () => {
           })}
         />
         <p className="text-red-600 mb-2 font-light">{errors.email?.message}</p>
-        <Label htmlFor="email">Password</Label>
+        <Label htmlFor="password">Password</Label>
         <div className="relative">
           <input
+            id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
+            name="password"
             className="mb-4 w-full px-3 py-2 border rounded-md pr-10"
             {...register("password", { required: true })}
           />

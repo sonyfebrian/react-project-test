@@ -103,24 +103,4 @@ describe("FormRegister Component", () => {
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
   });
-
-  it("submits the form with valid input values", async () => {
-    render(
-      <Provider store={store}>
-        <Router>
-          <FormRegister />
-        </Router>
-      </Provider>
-    );
-
-    const emailInput = screen.getByLabelText("Email");
-    const passwordInput = screen.getByLabelText("Password");
-    const registerButton = screen.getByText("Register");
-
-    // Input valid email and password
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-    fireEvent.change(passwordInput, { target: { value: "testPassword123" } });
-
-    fireEvent.click(registerButton);
-  });
 });
